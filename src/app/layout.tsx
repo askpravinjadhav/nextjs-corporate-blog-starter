@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans, Newsreader } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/Footer";
+import { SiteHeader } from "@/components/SiteHeader";
 import { config } from "@/config";
 import { Providers } from "./providers";
 
@@ -74,6 +75,7 @@ export default function RootLayout({
         className={`${fontSans.variable} ${fontSerif.variable} antialiased font-sans`}
       >
         <Providers>
+          <SiteHeader />
           {children}
           <Footer />
         </Providers>

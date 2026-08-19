@@ -5,21 +5,24 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Author, GetRelatedPostsResult, TagInPost } from "@wisp-cms/client";
+import { Author, GetPostsResult, GetRelatedPostsResult, TagInPost } from "@wisp-cms/client";
 import Image from "next/image";
 import Link from "next/link";
-import { FullWidthHeader } from "./FullWidthHeader";
 import { RelatedPosts } from "./RelatedPosts";
 import { processTableOfContents, TableOfContents } from "./TOC";
 import { ContentWithCustomComponents } from "@wisp-cms/react-custom-component";
 import { FAQ } from "./WispComponents/FAQ";
-import { formatFullDate } from "@/lib/date";
-import { stripCmsAttribution } from "@/lib/stripCmsAttribution";
+import { formatMagazineDate } from "@/lib/date";
+import { stripCmsAttribution, stripLeadingFeaturedImage } from "@/lib/stripCmsAttribution";
 import { CommentSection } from "./CommentSection";
+import { CategoryLabel } from "./CategoryLabel";
+import { LatestNewsSidebar } from "./LatestNewsSidebar";
+import { getPostCategory } from "@/lib/postCategory";
 
 export const BlogContent = ({
-  post: { title, content, author, publishedAt, tags, slug },
+  post: { title, content, author, publishedAt, tags, slug, image },
   relatedPosts,
+  latestPosts = [],
 }: {
   post: {
     id: string;
@@ -37,79 +40,108 @@ export const BlogContent = ({
     author: Author;
   };
   relatedPosts: GetRelatedPostsResult["posts"];
+  latestPosts?: GetPostsResult["posts"];
 }) => {
-  const { modifiedHtml, tableOfContents } = processTableOfContents(content, {
-    h1: true,
-    h2: true,
-    h3: true,
-    h4: true,
-    h5: true,
-    h6: true,
-  });
-  const htmlWithoutAttribution = stripCmsAttribution(modifiedHtml);
+  const cleanedContent = stripLeadingFeaturedImage(
+    stripCmsAttribution(content),
+    image
+  );
+  const { modifiedHtml, tableOfContents } = processTableOfContents(
+    cleanedContent,
+    {
+      h1: true,
+      h2: true,
+      h3: true,
+      h4: true,
+      h5: true,
+      h6: true,
+    }
+  );
+  const category = getPostCategory(tags);
+  const sidebarPosts = latestPosts
+    .filter((post) => post.slug !== slug)
+    .slice(0, 6);
+  const showSidebar = sidebarPosts.length > 0;
+
   return (
-    <>
-      <FullWidthHeader
-        title={title}
-        description=""
-        serifTitle
-        breadcrumb={[
-          { label: "Home", href: "/" },
-          { label: title, href: "" },
-        ]}
-      />
-      <div className="container mx-auto mt-8 px-4 max-w-6xl">
-        <div className="flex items-center gap-2">
-          <Image
-            src={author.image || ""}
-            alt={author.name || ""}
-            width={30}
-            height={30}
-            className="rounded-full"
-          />
-          <div className="font-medium">{author.name}</div> |
-          <div>
-            Published on {publishedAt ? formatFullDate(publishedAt) : "N/A"}
-          </div>
-        </div>
-        <div className="flex">
-          <div className="lg:w-3/4 prose prose-lg max-w-none w-full break-words blog-content">
-            <Accordion
-              type="single"
-              collapsible
-              className="w-full not-prose my-6 block lg:hidden"
-            >
-              <AccordionItem value="toc" className="border-none">
-                <AccordionTrigger>Table of Content</AccordionTrigger>
-                <AccordionContent>
-                  <TableOfContents items={tableOfContents} />
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-            <ContentWithCustomComponents
-              content={htmlWithoutAttribution}
-              customComponents={{
-                FAQ,
-              }}
-            />
-          </div>
-          <div className="w-1/4 hidden lg:block">
-            <div className="sticky top-0 mt-4 p-4 max-h-screen overflow-y-auto">
-              <div className="text-lg font-semibold">Table of Contents</div>
-              <TableOfContents items={tableOfContents} />
+    <div className="mx-auto max-w-7xl px-4 py-6">
+      <div className="border border-neutral-200">
+        <div className={showSidebar ? "grid lg:grid-cols-3" : ""}>
+          <article
+            className={
+              showSidebar
+                ? "lg:col-span-2 lg:border-r lg:border-neutral-200"
+                : ""
+            }
+          >
+            <div className="p-5 md:p-6">
+              <CategoryLabel label={category.label} tag={category.tag} />
+              <h1 className="mt-2 text-2xl font-bold leading-tight tracking-tight text-black md:text-4xl">
+                {title}
+              </h1>
+              <p className="mt-3 text-[10px] uppercase tracking-wider text-neutral-400">
+                {author.name} ·{" "}
+                {publishedAt ? formatMagazineDate(publishedAt) : "N/A"}
+              </p>
+              {image && (
+                <div className="relative mt-5 aspect-[16/8]">
+                  <Image src={image} alt={title} fill className="object-cover" />
+                </div>
+              )}
             </div>
-          </div>
+            <div className="border-t border-neutral-200 p-5 md:p-6">
+              <div className="prose prose-lg blog-content max-w-none break-words prose-headings:font-bold prose-headings:tracking-tight prose-p:text-[15px] prose-p:leading-relaxed prose-p:text-neutral-700">
+                {tableOfContents.length > 0 && (
+                  <Accordion
+                    type="single"
+                    collapsible
+                    className="not-prose mb-6 w-full border border-neutral-200 px-3"
+                  >
+                    <AccordionItem value="toc" className="border-none">
+                      <AccordionTrigger className="py-2 text-[10px] font-bold uppercase tracking-[0.14em] hover:no-underline">
+                        Table of contents
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <TableOfContents items={tableOfContents} />
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                )}
+                <ContentWithCustomComponents
+                  content={modifiedHtml}
+                  customComponents={{
+                    FAQ,
+                  }}
+                />
+              </div>
+              {tags.length > 0 && (
+                <div className="mt-8 flex flex-wrap gap-x-3 gap-y-1 border-t border-neutral-200 pt-4">
+                  {tags.map((tag) => (
+                    <Link
+                      href={`/category/${tag.name}`}
+                      key={tag.id}
+                      className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#2563eb]"
+                    >
+                      {tag.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+              <div className="mt-8 border-t border-neutral-200 pt-6">
+                <CommentSection slug={slug} />
+              </div>
+              <RelatedPosts posts={relatedPosts} />
+            </div>
+          </article>
+          {showSidebar && (
+            <div className="border-t border-neutral-200 p-5 md:p-6 lg:border-t-0">
+              <div className="lg:sticky lg:top-24">
+                <LatestNewsSidebar posts={sidebarPosts} />
+              </div>
+            </div>
+          )}
         </div>
-        <div className="my-8 space-x-2">
-          {tags.map((tag) => (
-            <Link href={`/category/${tag.name}`} key={tag.id}>
-              #{tag.name}
-            </Link>
-          ))}
-        </div>
-        <CommentSection slug={slug} />
-        <RelatedPosts posts={relatedPosts} />
       </div>
-    </>
+    </div>
   );
 };

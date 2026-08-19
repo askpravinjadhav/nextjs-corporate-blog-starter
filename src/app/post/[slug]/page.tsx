@@ -72,9 +72,10 @@ export default async function BlogPost(
     slug
   } = params;
 
-  const [result, related] = await Promise.all([
+  const [result, related, latest] = await Promise.all([
     wisp.getPost(slug),
     wisp.getRelatedPosts({ slug, limit: 4 }),
+    wisp.getPosts({ limit: 8 }),
   ]);
 
   if (!result.post) return null;
@@ -125,7 +126,11 @@ export default async function BlogPost(
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <BlogContent post={result.post} relatedPosts={related.posts} />
+      <BlogContent
+        post={result.post}
+        relatedPosts={related.posts}
+        latestPosts={latest.posts}
+      />
     </>
   );
 }

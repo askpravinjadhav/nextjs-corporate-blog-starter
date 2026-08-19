@@ -31,3 +31,55 @@ export const stripCmsAttribution = (html: string): string => {
 
   return root.toString();
 };
+
+const normalizeUrl = (value: string) =>
+  value.split("?")[0].replace(/&amp;/g, "&").trim();
+
+export const stripLeadingFeaturedImage = (
+  html: string,
+  imageUrl: string | null
+): string => {
+  if (!imageUrl) {
+    return html;
+  }
+
+  const featured = normalizeUrl(imageUrl);
+  const featuredId = featured.split("/").filter(Boolean).at(-2) || "";
+  const root = parse(html);
+
+  root.querySelectorAll("img").forEach((img) => {
+    const src = normalizeUrl(img.getAttribute("src") || "");
+    const isFeatured =
+      src === featured ||
+      (featuredId.length > 8 && src.includes(featuredId));
+
+    if (!isFeatured) {
+      return;
+    }
+
+    const parent = img.parentNode;
+    img.remove();
+
+    if (!parent) {
+      return;
+    }
+
+    const tag = (parent.tagName || "").toUpperCase();
+    const leftover = (parent.text || "").replace(/\s+/g, " ").trim();
+    if (
+      ["P", "FIGURE", "DIV", "SPAN"].includes(tag) &&
+      !parent.querySelector("img") &&
+      !leftover
+    ) {
+      parent.remove();
+    }
+  });
+
+  root.querySelectorAll("p").forEach((paragraph) => {
+    if (!(paragraph.text || "").replace(/\s+/g, " ").trim() && !paragraph.querySelector("img")) {
+      paragraph.remove();
+    }
+  });
+
+  return root.toString();
+};

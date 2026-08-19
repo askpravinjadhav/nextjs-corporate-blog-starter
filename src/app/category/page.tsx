@@ -3,7 +3,6 @@ export const revalidate = 60;
 
 import { wisp } from "@/lib/wisp";
 import Link from "next/link";
-import { FullWidthHeader } from "../../components/FullWidthHeader";
 import { Metadata } from "next";
 import { config } from "@/config";
 import { getOgImageUrl } from "@/lib/ogImage";
@@ -26,22 +25,35 @@ export default async function Page() {
   const result = await wisp.getTags();
 
   return (
-    <>
-      <FullWidthHeader
-        title="Categories"
-        description="Browse blog posts by category"
-        breadcrumb={[
-          { label: "Home", href: "/" },
-          { label: "Category", href: `/category/` },
-        ]}
-      />
-      <div className="container mx-auto text-xl px-4 mb-10 max-w-6xl">
-        {result.tags.map((tag) => (
-          <Link key={tag.id} href={`/category/${tag.name}`}>
-            <div className="inline-block mr-4 mt-2">#{tag.name}</div>
+    <div className="mx-auto max-w-7xl px-4 py-8">
+      <h1 className="font-serif text-3xl font-medium tracking-tight">
+        Categories
+      </h1>
+      <p className="mt-2 text-muted-foreground">Browse posts by section</p>
+      <div className="mt-8 flex flex-wrap gap-3">
+        {config.categories.map((category) => (
+          <Link
+            key={category.tag}
+            href={`/category/${category.tag}`}
+            className="border px-4 py-2 text-sm font-semibold uppercase tracking-wider text-[#2563eb]"
+          >
+            {category.label}
           </Link>
         ))}
+        {result.tags
+          .filter(
+            (tag) => !config.categories.some((c) => c.tag === tag.name)
+          )
+          .map((tag) => (
+            <Link
+              key={tag.id}
+              href={`/category/${tag.name}`}
+              className="border px-4 py-2 text-sm text-[#2563eb]"
+            >
+              #{tag.name}
+            </Link>
+          ))}
       </div>
-    </>
+    </div>
   );
 }

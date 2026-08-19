@@ -14,31 +14,30 @@ export const RelatedPosts: FunctionComponent<{
   }
 
   return (
-    <div className="my-8">
-      <div className="mb-6 text-lg font-semibold tracking-tight">
-        Related Posts
+    <div className="mt-8 border-t border-neutral-200 pt-6">
+      <div className="mb-4 text-[10px] font-bold uppercase tracking-[0.16em]">
+        Related
       </div>
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
+      <div className="grid border border-neutral-200 sm:grid-cols-2 lg:grid-cols-4 sm:divide-x sm:divide-neutral-200">
         {posts.slice(0, 4).map((post) => (
-          <div className=" bg-muted overflow-hidden rounded-lg" key={post.id}>
+          <article
+            className="border-t border-neutral-200 p-3 sm:border-t-0"
+            key={post.id}
+          >
             <Link href={`/post/${post.slug}`}>
               <AspectRatio ratio={16 / 9} className="w-full">
                 <Image
                   src={post.image || "/placeholder.jpg"}
                   alt={post.title}
                   fill
-                  className="h -full min-h-full min-w-full object-cover object-center"
+                  className="object-cover object-center"
                 />
               </AspectRatio>
             </Link>
-            <div className="prose prose-sm dark:prose-invert p-4">
-              <h3 className="line-clamp-2">{post.title}</h3>
-              <p className="line-clamp-3">{post.description}</p>
-              <Link href={`/post/${post.slug}`}>
-                <strong>Read Full Story</strong>
-              </Link>
-            </div>
-          </div>
+            <h3 className="mt-2 line-clamp-2 text-[13px] font-bold leading-snug">
+              <Link href={`/post/${post.slug}`}>{post.title}</Link>
+            </h3>
+          </article>
         ))}
       </div>
     </div>

@@ -1,10 +1,8 @@
 export const revalidate = 60; // 1 minute
 
-import { BlogPostList } from "@/components/BlogPostList";
+import { ArticleCard } from "@/components/ArticleCard";
 import { PostPagination } from "@/components/PostPagination";
 import { wisp } from "@/lib/wisp";
-import { FilterBar } from "../../../components/FilterBar";
-import { FullWidthHeader } from "../../../components/FullWidthHeader";
 import { config } from "../../../config";
 import { Metadata } from "next";
 import { getOgImageUrl } from "@/lib/ogImage";
@@ -55,33 +53,44 @@ export default async function Page(
   };
   const page = searchParams?.page ? parseInt(searchParams.page) : 1;
   const result = await wisp.getPosts({
-    limit: 6,
+    limit: 9,
     tags: [tag],
     query: searchParams?.query,
     page,
   });
 
   return (
-    <>
-      <FullWidthHeader
-        title={label}
-        description={description}
-        breadcrumb={[
-          { label: "Home", href: "/" },
-          { label: "Category", href: `/category/` },
-          { label, href: `/category/${tag}` },
-        ]}
-      />
-      <div className="container mx-auto max-w-6xl">
-        <FilterBar active={tag} className="my-8" />
-        <BlogPostList posts={result.posts} />
-        <PostPagination
-          pagination={result.pagination}
-          className="my-16"
-          query={searchParams?.query}
-          basePath={`/category/${tag}`}
-        />
+    <div className="mx-auto max-w-7xl px-4 py-6">
+      <div className="border border-neutral-200 p-5 md:p-6">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#2563eb]">
+          {label}
+        </p>
+        <h1 className="mt-2 text-2xl font-bold tracking-tight md:text-3xl">
+          {label}
+        </h1>
+        <p className="mt-2 max-w-2xl text-[13px] text-neutral-500">{description}</p>
       </div>
-    </>
+      <div className="mt-0 grid border-x border-b border-neutral-200 sm:grid-cols-2 lg:grid-cols-3 sm:divide-x sm:divide-neutral-200">
+        {result.posts.map((post) => (
+          <div
+            key={post.id}
+            className="border-t border-neutral-200 p-4"
+          >
+            <ArticleCard post={post} />
+          </div>
+        ))}
+      </div>
+      {result.posts.length === 0 && (
+        <p className="border-x border-b border-neutral-200 p-5 text-[13px] text-neutral-500">
+          No posts in this section yet.
+        </p>
+      )}
+      <PostPagination
+        pagination={result.pagination}
+        className="my-12"
+        query={searchParams?.query}
+        basePath={`/category/${tag}`}
+      />
+    </div>
   );
 }
