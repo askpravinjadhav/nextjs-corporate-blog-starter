@@ -20,7 +20,7 @@ export const LatestNewsSidebar = ({
         Latest News
       </h2>
       <div className="mt-4 divide-y divide-neutral-200 border-t border-neutral-200">
-        {posts.map((post) => {
+        {posts.slice(0, 4).map((post) => {
           const category = getPostCategory(post.tags);
           return (
             <article key={post.id} className="flex gap-3 py-4">
@@ -50,7 +50,7 @@ export const LatestNewsSidebar = ({
       </div>
       <Link
         href="/news"
-        className="mt-3 inline-block text-[10px] font-semibold uppercase tracking-[0.14em] text-[#2563eb]"
+        className="mt-3 inline-block text-[10px] font-semibold uppercase tracking-[0.14em] text-pw-secondary hover:text-pw-secondary-hover"
       >
         View all news →
       </Link>

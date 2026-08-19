@@ -18,7 +18,7 @@ export const VisualStoriesSection = ({
         </h2>
         <Link
           href="/visual-stories"
-          className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#2563eb]"
+          className="text-[10px] font-semibold uppercase tracking-[0.14em] text-pw-secondary"
         >
           View all →
         </Link>
@@ -60,7 +60,7 @@ export const VisualStoriesSection = ({
                   Coming soon
                 </p>
               </div>
-              <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#2563eb]">
+              <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-pw-secondary">
                 {label}
               </p>
               <p className="mt-1.5 text-[13px] leading-snug text-neutral-500">

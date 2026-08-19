@@ -35,7 +35,7 @@ export default async function Page() {
           <Link
             key={category.tag}
             href={`/category/${category.tag}`}
-            className="border px-4 py-2 text-sm font-semibold uppercase tracking-wider text-[#2563eb]"
+            className="border px-4 py-2 text-sm font-semibold uppercase tracking-wider text-pw-secondary"
           >
             {category.label}
           </Link>
@@ -48,7 +48,7 @@ export default async function Page() {
             <Link
               key={tag.id}
               href={`/category/${tag.name}`}
-              className="border px-4 py-2 text-sm text-[#2563eb]"
+              className="border px-4 py-2 text-sm text-pw-secondary"
             >
               #{tag.name}
             </Link>

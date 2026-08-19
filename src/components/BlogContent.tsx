@@ -61,7 +61,7 @@ export const BlogContent = ({
   const category = getPostCategory(tags);
   const sidebarPosts = latestPosts
     .filter((post) => post.slug !== slug)
-    .slice(0, 6);
+    .slice(0, 4);
   const showSidebar = sidebarPosts.length > 0;
 
   return (
@@ -137,7 +137,7 @@ export const BlogContent = ({
                     <Link
                       href={`/category/${tag.name}`}
                       key={tag.id}
-                      className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#2563eb]"
+                      className="text-[10px] font-semibold uppercase tracking-[0.14em] text-pw-secondary"
                     >
                       {tag.name}
                     </Link>

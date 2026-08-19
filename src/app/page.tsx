@@ -4,7 +4,6 @@ import { ArticleCard } from "@/components/ArticleCard";
 import { BlogPostList } from "@/components/BlogPostList";
 import { HeroFeature } from "@/components/HeroFeature";
 import { LatestNewsSidebar } from "@/components/LatestNewsSidebar";
-import { VisualStoriesSection } from "@/components/VisualStoriesSection";
 import { PostPagination } from "@/components/PostPagination";
 import { getOgImageUrl } from "@/lib/ogImage";
 import { getOrganizationJsonLd, getWebsiteJsonLd } from "@/lib/jsonLd";
@@ -43,20 +42,15 @@ export default async function Page(
   const page = searchParams?.page ? parseInt(searchParams.page) : 1;
   const query = searchParams?.query;
   const isFiltered = Boolean(query) || page > 1;
-  const [result, visualStories] = await Promise.all([
-    wisp.getPosts({
-      limit: isFiltered ? 6 : 12,
-      query,
-      page,
-    }),
-    isFiltered
-      ? Promise.resolve({ posts: [] })
-      : wisp.getPosts({ limit: 3, tags: ["visual-stories"] }),
-  ]);
+  const result = await wisp.getPosts({
+    limit: isFiltered ? 6 : 12,
+    query,
+    page,
+  });
 
   const [hero, ...rest] = result.posts;
   const cards = rest.slice(0, 3);
-  const sidebar = rest.slice(3).length > 0 ? rest.slice(3) : result.posts;
+  const sidebar = result.posts.slice(0, 4);
 
   return (
     <>
@@ -85,7 +79,6 @@ export default async function Page(
             />
           </>
         ) : hero ? (
-          <>
           <div className="border border-neutral-200">
             <div className="grid lg:grid-cols-3">
               <div className="lg:col-span-2 lg:border-r lg:border-neutral-200">
@@ -107,8 +100,6 @@ export default async function Page(
               </div>
             </div>
           </div>
-          <VisualStoriesSection posts={visualStories.posts} />
-          </>
         ) : (
           <p className="text-muted-foreground">No posts yet.</p>
         )}

@@ -36,7 +36,7 @@ export default async function NewsPage(
   return (
     <div className="mx-auto max-w-7xl px-4 py-6">
       <div className="border border-neutral-200 p-5 md:p-6">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#2563eb]">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-pw-secondary">
           Latest
         </p>
         <h1 className="mt-2 text-2xl font-bold tracking-tight md:text-3xl">

@@ -15,7 +15,7 @@ export const CategoryLabel = ({
     <Link
       href={getCategoryHref(tag)}
       className={cn(
-        "text-[10px] font-semibold uppercase tracking-[0.16em] text-[#2563eb] hover:underline",
+        "text-[10px] font-semibold uppercase tracking-[0.16em] text-pw-secondary hover:text-pw-secondary-hover hover:underline",
         className
       )}
     >
