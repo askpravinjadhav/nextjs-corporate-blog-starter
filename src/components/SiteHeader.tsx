@@ -4,11 +4,14 @@ import { config } from "@/config";
 import { infographicSections } from "@/lib/infographics";
 import { getCategoryHref } from "@/lib/postCategory";
 import { cn } from "@/lib/utils";
-import { Bookmark, Menu, Search, X } from "lucide-react";
+import { Bookmark, ChevronDown, Menu, Search, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { KeyboardEvent, Suspense, useEffect, useRef, useState } from "react";
+
+const infographicSubLinkClass =
+  "text-[11px] tracking-wide text-neutral-500 hover:text-black";
 
 const navItems = [
   { label: "Latest", href: "/" },
@@ -16,6 +19,7 @@ const navItems = [
     label: category.label,
     href: getCategoryHref(category.tag),
   })),
+  { label: "About", href: "/about" },
 ];
 
 const SiteHeaderInner = () => {
@@ -25,13 +29,46 @@ const SiteHeaderInner = () => {
   const [searchOpen, setSearchOpen] = useState(Boolean(param.get("query")));
   const [searchText, setSearchText] = useState(param.get("query") || "");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [infographicsHover, setInfographicsHover] = useState(false);
+  const [infographicsMenuOpen, setInfographicsMenuOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const burgerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (searchOpen) {
       searchInputRef.current?.focus();
     }
   }, [searchOpen]);
+
+  useEffect(() => {
+    setInfographicsHover(false);
+    setInfographicsMenuOpen(false);
+    setMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!menuOpen) {
+      return;
+    }
+    const onPointerDown = (event: PointerEvent) => {
+      if (!burgerRef.current?.contains(event.target as Node)) {
+        setMenuOpen(false);
+        setInfographicsMenuOpen(false);
+      }
+    };
+    const onKeyDown = (event: globalThis.KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        setInfographicsMenuOpen(false);
+      }
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [menuOpen]);
 
   const onHandleKey = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -49,64 +86,164 @@ const SiteHeaderInner = () => {
 
   return (
     <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white">
-      <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-2.5">
-        <button
-          type="button"
-          aria-label="Open menu"
-          onClick={() => setMenuOpen((open) => !open)}
-          className="shrink-0 text-neutral-800"
-        >
-          {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+      <div className="relative mx-auto flex max-w-7xl items-center gap-3 px-4 py-2.5">
+        <div className="flex h-8 items-center gap-2.5">
+          <div ref={burgerRef} className="relative flex h-8 items-center">
+            <button
+              type="button"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              onClick={() => {
+                setMenuOpen((open) => !open);
+                setInfographicsMenuOpen(false);
+              }}
+              className="inline-flex h-8 w-8 items-center justify-center text-neutral-800"
+            >
+              {menuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
+            </button>
+            {menuOpen && (
+              <nav className="absolute left-0 top-full z-50 mt-2.5 w-52 border border-neutral-200 bg-white py-2">
+              {navItems.map((item) => {
+                const active =
+                  item.href === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(item.href);
+                if (item.href === "/infographics") {
+                  return (
+                    <div key={item.href} className="px-3 py-1.5">
+                      <div className="flex items-center gap-1">
+                        <Link
+                          href={item.href}
+                          className={cn(
+                            "text-[11px] tracking-wide",
+                            active && "font-semibold"
+                          )}
+                          onClick={() => setMenuOpen(false)}
+                        >
+                          {item.label}
+                        </Link>
+                        <button
+                          type="button"
+                          className="p-0.5 text-neutral-500"
+                          aria-label="Show Infographics sections"
+                          aria-expanded={infographicsMenuOpen}
+                          onClick={() =>
+                            setInfographicsMenuOpen((open) => !open)
+                          }
+                        >
+                          <ChevronDown
+                            className={cn(
+                              "h-3 w-3 transition-transform",
+                              infographicsMenuOpen && "rotate-180"
+                            )}
+                          />
+                        </button>
+                      </div>
+                      {infographicsMenuOpen && (
+                        <div className="mt-2 flex flex-col gap-1.5 pl-2">
+                          {infographicSections.map((section) => (
+                            <Link
+                              key={section.slug}
+                              href={section.href}
+                              className={infographicSubLinkClass}
+                              onClick={() => setMenuOpen(false)}
+                            >
+                              {section.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      "block px-3 py-1.5 text-[11px] tracking-wide",
+                      active && "font-semibold"
+                    )}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
+            )}
+          </div>
 
-        <Link href="/" className="shrink-0 whitespace-nowrap text-base leading-none tracking-tight text-black">
-          <span className="font-light">PRODUCT</span>{" "}
-          <span className="font-bold">WIRE</span>
-        </Link>
+          <Link
+            href="/"
+            className="inline-flex h-8 items-center whitespace-nowrap text-base leading-none tracking-tight text-black"
+          >
+            <span className="font-light">PRODUCT</span>
+            <span className="ml-[0.3em] font-bold">WIRE</span>
+          </Link>
+        </div>
 
-        <nav className="hidden flex-1 items-center justify-center gap-5 lg:flex">
+        <nav className="hidden flex-1 items-center justify-center gap-4 xl:gap-5 lg:flex">
           {navItems.map((item) => {
             const active =
               item.href === "/"
                 ? pathname === "/"
                 : pathname.startsWith(item.href);
+            const linkClass = cn(
+              "inline-flex h-8 items-center whitespace-nowrap text-[11px] tracking-wide text-neutral-700 hover:text-black",
+              active && "font-semibold text-black"
+            );
             if (item.href === "/infographics") {
               return (
-                <div key={item.href} className="group relative">
+                <div
+                  key={item.href}
+                  className="relative inline-flex h-8 items-center"
+                  onMouseEnter={() => setInfographicsHover(true)}
+                  onMouseLeave={() => setInfographicsHover(false)}
+                >
                   <Link
                     href={item.href}
-                    className={cn(
-                      "text-[11px] tracking-wide text-neutral-700 hover:text-black",
-                      active && "font-semibold text-black"
-                    )}
+                    className={cn(linkClass, "gap-1")}
+                    aria-haspopup="true"
+                    aria-expanded={infographicsHover}
                   >
                     {item.label}
+                    <ChevronDown
+                      className={cn(
+                        "h-3 w-3 shrink-0 text-neutral-500 transition-transform",
+                        infographicsHover && "rotate-180 text-black"
+                      )}
+                      aria-hidden="true"
+                    />
                   </Link>
-                  <div className="invisible absolute left-1/2 top-full z-50 w-56 -translate-x-1/2 pt-3 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                    <div className="border border-neutral-200 bg-white shadow-sm">
-                      {infographicSections.map((section) => (
-                        <Link
-                          key={section.slug}
-                          href={section.href}
-                          className="block px-4 py-2.5 text-[12px] text-neutral-600 hover:bg-neutral-50 hover:text-black"
-                        >
-                          {section.label}
-                        </Link>
-                      ))}
+                  {infographicsHover && (
+                    <div className="absolute left-0 top-full z-50 pt-2.5">
+                      <div className="w-52 border border-neutral-200 bg-white py-2">
+                        <div className="px-3 py-1.5">
+                          <div className="flex flex-col gap-1.5 pl-2">
+                            {infographicSections.map((section) => (
+                              <Link
+                                key={section.slug}
+                                href={section.href}
+                                className={infographicSubLinkClass}
+                              >
+                                {section.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               );
             }
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "text-[11px] tracking-wide text-neutral-700 hover:text-black",
-                  active && "font-semibold text-black"
-                )}
-              >
+              <Link key={item.href} href={item.href} className={linkClass}>
                 {item.label}
               </Link>
             );
@@ -148,45 +285,6 @@ const SiteHeaderInner = () => {
           )}
         </div>
       </div>
-
-      {menuOpen && (
-        <nav className="border-t border-neutral-200 px-4 py-3">
-          <div className="mx-auto flex max-w-7xl flex-col gap-2.5">
-            {navItems.map((item) => (
-              <div key={item.href}>
-                <Link
-                  href={item.href}
-                  className="text-[11px] tracking-wide"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-                {item.href === "/infographics" && (
-                  <div className="ml-3 mt-2 flex flex-col gap-1.5">
-                    {infographicSections.map((section) => (
-                      <Link
-                        key={section.slug}
-                        href={section.href}
-                        className="text-[11px] tracking-wide text-neutral-500"
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        {section.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-            <Link
-              href="/about"
-              className="text-[11px] tracking-wide"
-              onClick={() => setMenuOpen(false)}
-            >
-              About
-            </Link>
-          </div>
-        </nav>
-      )}
     </header>
   );
 };
