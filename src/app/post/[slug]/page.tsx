@@ -1,7 +1,7 @@
 export const revalidate = 60; // 1 minute'
 
 import type { Metadata } from "next";
-import { wisp } from "@/lib/wisp";
+import { getPostSeoDescription, wisp } from "@/lib/wisp";
 import { BlogContent } from "@/components/BlogContent";
 import { config } from "@/config";
 import { getOgImageUrl } from "@/lib/ogImage";
@@ -30,7 +30,7 @@ export async function generateMetadata(
   }
 
   const postUrl = urlJoin(config.baseUrl, "post", slug);
-  const description = result.post.description ?? "";
+  const description = getPostSeoDescription(result.post);
 
   return {
     title: result.post.title,
@@ -79,18 +79,18 @@ export default async function BlogPost(
 
   if (!result.post) return null;
 
-  const { title, publishedAt, updatedAt, author, image, description } =
-    result.post;
+  const post = result.post;
+  const description = getPostSeoDescription(post);
   const postUrl = urlJoin(config.baseUrl, "post", slug);
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
-    headline: title,
-    description: description ?? undefined,
-    image: image ? image : undefined,
-    datePublished: publishedAt ? publishedAt.toString() : undefined,
-    dateModified: updatedAt.toString(),
+    headline: post.title,
+    description,
+    image: post.image ? post.image : undefined,
+    datePublished: post.publishedAt ? post.publishedAt.toString() : undefined,
+    dateModified: post.updatedAt.toString(),
     url: postUrl,
     inLanguage: "en-IN",
     isAccessibleForFree: true,
@@ -106,8 +106,8 @@ export default async function BlogPost(
     },
     author: {
       "@type": "Person",
-      name: author.name ?? undefined,
-      image: author.image ?? undefined,
+      name: post.author.name ?? undefined,
+      image: post.author.image ?? undefined,
     },
     publisher: {
       "@type": "NewsMediaOrganization",
