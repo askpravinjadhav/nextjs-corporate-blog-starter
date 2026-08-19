@@ -49,7 +49,7 @@ export const LatestNewsSidebar = ({
         })}
       </div>
       <Link
-        href="/"
+        href="/news"
         className="mt-3 inline-block text-[10px] font-semibold uppercase tracking-[0.14em] text-[#2563eb]"
       >
         View all news →

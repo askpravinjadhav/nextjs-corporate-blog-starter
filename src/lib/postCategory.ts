@@ -1,5 +1,15 @@
 import { config } from "@/config";
 
+export const getCategoryHref = (tag: string) => {
+  if (tag === "latest") {
+    return "/";
+  }
+  if (tag === "visual-stories") {
+    return "/visual-stories";
+  }
+  return `/category/${tag}`;
+};
+
 export const getPostCategory = (tags: { name: string }[]) => {
   const match = config.categories.find((category) =>
     tags.some((tag) => tag.name === category.tag)

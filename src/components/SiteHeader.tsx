@@ -1,6 +1,7 @@
 "use client";
 
 import { config } from "@/config";
+import { getCategoryHref } from "@/lib/postCategory";
 import { cn } from "@/lib/utils";
 import { Bookmark, Menu, Search, X } from "lucide-react";
 import Link from "next/link";
@@ -11,7 +12,7 @@ const navItems = [
   { label: "Latest", href: "/" },
   ...config.categories.map((category) => ({
     label: category.label,
-    href: `/category/${category.tag}`,
+    href: getCategoryHref(category.tag),
   })),
 ];
 

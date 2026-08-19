@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { getCategoryHref } from "@/lib/postCategory";
 
 export const CategoryLabel = ({
   label,
@@ -10,10 +11,9 @@ export const CategoryLabel = ({
   tag: string;
   className?: string;
 }) => {
-  const href = tag === "latest" ? "/" : `/category/${tag}`;
   return (
     <Link
-      href={href}
+      href={getCategoryHref(tag)}
       className={cn(
         "text-[10px] font-semibold uppercase tracking-[0.16em] text-[#2563eb] hover:underline",
         className

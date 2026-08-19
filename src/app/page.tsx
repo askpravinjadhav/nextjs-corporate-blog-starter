@@ -4,6 +4,7 @@ import { ArticleCard } from "@/components/ArticleCard";
 import { BlogPostList } from "@/components/BlogPostList";
 import { HeroFeature } from "@/components/HeroFeature";
 import { LatestNewsSidebar } from "@/components/LatestNewsSidebar";
+import { VisualStoriesSection } from "@/components/VisualStoriesSection";
 import { PostPagination } from "@/components/PostPagination";
 import { getOgImageUrl } from "@/lib/ogImage";
 import { getOrganizationJsonLd, getWebsiteJsonLd } from "@/lib/jsonLd";
@@ -42,11 +43,16 @@ export default async function Page(
   const page = searchParams?.page ? parseInt(searchParams.page) : 1;
   const query = searchParams?.query;
   const isFiltered = Boolean(query) || page > 1;
-  const result = await wisp.getPosts({
-    limit: isFiltered ? 6 : 12,
-    query,
-    page,
-  });
+  const [result, visualStories] = await Promise.all([
+    wisp.getPosts({
+      limit: isFiltered ? 6 : 12,
+      query,
+      page,
+    }),
+    isFiltered
+      ? Promise.resolve({ posts: [] })
+      : wisp.getPosts({ limit: 3, tags: ["visual-stories"] }),
+  ]);
 
   const [hero, ...rest] = result.posts;
   const cards = rest.slice(0, 3);
@@ -79,6 +85,7 @@ export default async function Page(
             />
           </>
         ) : hero ? (
+          <>
           <div className="border border-neutral-200">
             <div className="grid lg:grid-cols-3">
               <div className="lg:col-span-2 lg:border-r lg:border-neutral-200">
@@ -100,6 +107,8 @@ export default async function Page(
               </div>
             </div>
           </div>
+          <VisualStoriesSection posts={visualStories.posts} />
+          </>
         ) : (
           <p className="text-muted-foreground">No posts yet.</p>
         )}

@@ -36,6 +36,11 @@ const categories: Category[] = [
     tag: "exhibitions",
     description: "Trade shows and exhibitions showcasing new products and ideas.",
   },
+  {
+    label: "Visual Stories",
+    tag: "visual-stories",
+    description: "Infographics, charts, and visual explainers. Coming soon.",
+  },
 ];
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";

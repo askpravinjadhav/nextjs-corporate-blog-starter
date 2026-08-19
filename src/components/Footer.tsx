@@ -1,4 +1,5 @@
 import { config } from "@/config";
+import { getCategoryHref } from "@/lib/postCategory";
 import { Bookmark, Linkedin, Newspaper, Rss } from "lucide-react";
 import Link from "next/link";
 
@@ -28,13 +29,16 @@ export const Footer = () => {
                 <Link href="/" className={linkClass}>
                   Latest
                 </Link>
+                <Link href="/news" className={linkClass}>
+                  All news
+                </Link>
                 <Link href="/about" className={linkClass}>
                   About
                 </Link>
                 {config.categories.map((category) => (
                   <Link
                     key={category.tag}
-                    href={`/category/${category.tag}`}
+                    href={getCategoryHref(category.tag)}
                     className={linkClass}
                   >
                     {category.label}
