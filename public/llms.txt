@@ -1,8 +1,9 @@
 # Product Wire
 
-> Product Wire is a publication covering tech, business, and India — including conferences, tech events, and exhibitions. We focus on clear reporting and uplifting stories of progress and innovation.
+> News without the noise. No ads. Product Wire is an independent news publication covering tech, business, and India — including conferences, tech events, and exhibitions. There is no advertising or sponsored inventory on the site.
 
 Site: https://www.productwire.space
+About: https://www.productwire.space/about
 RSS: https://www.productwire.space/rss
 Sitemap: https://www.productwire.space/sitemap.xml
 

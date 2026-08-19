@@ -110,7 +110,7 @@ export default async function BlogPost(
       image: author.image ?? undefined,
     },
     publisher: {
-      "@type": "Organization",
+      "@type": "NewsMediaOrganization",
       name: config.organization,
       url: config.baseUrl,
       logo: {

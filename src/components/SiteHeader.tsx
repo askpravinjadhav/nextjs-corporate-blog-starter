@@ -60,6 +60,9 @@ const SiteHeaderInner = () => {
           <span className="font-light">PRODUCT</span>{" "}
           <span className="font-bold">WIRE</span>
         </Link>
+        <span className="hidden whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-400 sm:inline">
+          No ads
+        </span>
 
         <nav className="hidden flex-1 items-center justify-center gap-5 lg:flex">
           {navItems.map((item) => {
@@ -130,6 +133,13 @@ const SiteHeaderInner = () => {
                 {item.label}
               </Link>
             ))}
+            <Link
+              href="/about"
+              className="text-[11px] tracking-wide"
+              onClick={() => setMenuOpen(false)}
+            >
+              About
+            </Link>
           </div>
         </nav>
       )}

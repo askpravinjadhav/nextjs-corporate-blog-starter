@@ -1,10 +1,11 @@
 import { config } from "@/config";
 
 export const getOrganizationJsonLd = () => ({
-  "@type": "Organization" as const,
+  "@type": "NewsMediaOrganization" as const,
   "@id": `${config.baseUrl}/#organization`,
   name: config.organization,
   url: config.baseUrl,
+  description: config.description,
   logo: {
     "@type": "ImageObject" as const,
     url: config.logoUrl,

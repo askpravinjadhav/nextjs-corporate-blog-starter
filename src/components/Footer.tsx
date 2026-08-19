@@ -28,6 +28,9 @@ export const Footer = () => {
                 <Link href="/" className={linkClass}>
                   Latest
                 </Link>
+                <Link href="/about" className={linkClass}>
+                  About
+                </Link>
                 {config.categories.map((category) => (
                   <Link
                     key={category.tag}
@@ -81,7 +84,7 @@ export const Footer = () => {
           </div>
           <div className="border-t border-neutral-200 px-5 py-3">
             <p className="text-[10px] uppercase tracking-[0.14em] text-neutral-400">
-              © {config.organization} {new Date().getFullYear()}
+              © {config.organization} {new Date().getFullYear()} · No ads
             </p>
           </div>
         </div>

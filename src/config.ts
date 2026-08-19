@@ -48,7 +48,7 @@ export const config = {
   title: process.env.NEXT_PUBLIC_BLOG_TITLE || "Product Wire",
   description:
     process.env.NEXT_PUBLIC_BLOG_DESCRIPTION ||
-    "Stay informed on the latest in tech, business, and India — covering conferences, tech events, and exhibitions.",
+    "News without the noise. No ads.",
   linkedinUrl: "https://www.linkedin.com/company/product-wire/",
   googleNewsUrl: `https://news.google.com/search?q=site:${new URL(baseUrl).hostname}&hl=en-IN&gl=IN&ceid=IN:en`,
   categories,

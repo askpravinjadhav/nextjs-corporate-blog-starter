@@ -15,7 +15,7 @@ const { title, description } = config;
 
 export const metadata: Metadata = {
   title: {
-    absolute: `Tech, business, and India news | ${title}`,
+    absolute: `News without the noise | ${title}`,
   },
   description,
   alternates: {
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: `Tech, business, and India news | ${title}`,
+    title: `News without the noise | ${title}`,
     description,
     url: "/",
     type: "website",
