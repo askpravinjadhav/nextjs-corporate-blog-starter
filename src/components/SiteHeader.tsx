@@ -1,6 +1,7 @@
 "use client";
 
 import { config } from "@/config";
+import { infographicSections } from "@/lib/infographics";
 import { getCategoryHref } from "@/lib/postCategory";
 import { cn } from "@/lib/utils";
 import { Bookmark, Menu, Search, X } from "lucide-react";
@@ -69,6 +70,34 @@ const SiteHeaderInner = () => {
               item.href === "/"
                 ? pathname === "/"
                 : pathname.startsWith(item.href);
+            if (item.href === "/infographics") {
+              return (
+                <div key={item.href} className="group relative">
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "text-[11px] tracking-wide text-neutral-700 hover:text-black",
+                      active && "font-semibold text-black"
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                  <div className="invisible absolute left-1/2 top-full z-50 w-56 -translate-x-1/2 pt-3 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                    <div className="border border-neutral-200 bg-white shadow-sm">
+                      {infographicSections.map((section) => (
+                        <Link
+                          key={section.slug}
+                          href={section.href}
+                          className="block px-4 py-2.5 text-[12px] text-neutral-600 hover:bg-neutral-50 hover:text-black"
+                        >
+                          {section.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              );
+            }
             return (
               <Link
                 key={item.href}
@@ -124,14 +153,29 @@ const SiteHeaderInner = () => {
         <nav className="border-t border-neutral-200 px-4 py-3">
           <div className="mx-auto flex max-w-7xl flex-col gap-2.5">
             {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-[11px] tracking-wide"
-                onClick={() => setMenuOpen(false)}
-              >
-                {item.label}
-              </Link>
+              <div key={item.href}>
+                <Link
+                  href={item.href}
+                  className="text-[11px] tracking-wide"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+                {item.href === "/infographics" && (
+                  <div className="ml-3 mt-2 flex flex-col gap-1.5">
+                    {infographicSections.map((section) => (
+                      <Link
+                        key={section.slug}
+                        href={section.href}
+                        className="text-[11px] tracking-wide text-neutral-500"
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        {section.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
             <Link
               href="/about"

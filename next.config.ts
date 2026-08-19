@@ -9,7 +9,23 @@ const nextConfig = {
       ],
     },
     redirects: async () => {
-      return [];
+      return [
+        {
+          source: "/visual-stories",
+          destination: "/infographics",
+          permanent: true,
+        },
+        {
+          source: "/infographics/charts/:topic",
+          destination: "/infographics/charts",
+          permanent: true,
+        },
+        {
+          source: "/infographics/explainers/:topic",
+          destination: "/infographics/explainers",
+          permanent: true,
+        },
+      ];
     },
   };
   

@@ -37,9 +37,9 @@ const categories: Category[] = [
     description: "Trade shows and exhibitions showcasing new products and ideas.",
   },
   {
-    label: "Visual Stories",
+    label: "Infographics",
     tag: "visual-stories",
-    description: "Infographics, charts, and visual explainers. Coming soon.",
+    description: "Charts and explainers from Product Wire.",
   },
 ];
 

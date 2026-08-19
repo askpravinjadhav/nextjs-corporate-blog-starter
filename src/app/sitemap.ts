@@ -28,7 +28,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     },
     {
-      url: urlJoin(config.baseUrl, "visual-stories"),
+      url: urlJoin(config.baseUrl, "infographics"),
+      lastModified: new Date(),
+      priority: 0.6,
+    },
+    {
+      url: urlJoin(config.baseUrl, "infographics/charts"),
+      lastModified: new Date(),
+      priority: 0.6,
+    },
+    {
+      url: urlJoin(config.baseUrl, "infographics/explainers"),
       lastModified: new Date(),
       priority: 0.6,
     },

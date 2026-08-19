@@ -1,16 +1,22 @@
 import { config } from "@/config";
+import { getBestInfographicMatch, getInfographicMatch } from "@/lib/infographics";
 
 export const getCategoryHref = (tag: string) => {
   if (tag === "latest") {
     return "/";
   }
-  if (tag === "visual-stories") {
-    return "/visual-stories";
+  const infographic = getInfographicMatch(tag);
+  if (infographic) {
+    return infographic.href;
   }
   return `/category/${tag}`;
 };
 
 export const getPostCategory = (tags: { name: string }[]) => {
+  const infographic = getBestInfographicMatch(tags);
+  if (infographic) {
+    return { label: infographic.label, tag: infographic.tag };
+  }
   const match = config.categories.find((category) =>
     tags.some((tag) => tag.name === category.tag)
   );

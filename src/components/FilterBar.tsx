@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import type { KeyboardEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 import { config } from "../config";
+import { getCategoryHref } from "../lib/postCategory";
 import { cn } from "../lib/utils";
 import Link from "next/link";
 
@@ -80,7 +81,9 @@ export const FilterBar = ({ className, active }: BlogNavigationBarProps) => {
             {categories.map((category) => (
               <Link
                 href={
-                  category.tag === "latest" ? `/` : `/category/${category.tag}`
+                  category.tag === "latest"
+                    ? `/`
+                    : getCategoryHref(category.tag)
                 }
                 key={category.tag}
               >

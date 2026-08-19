@@ -14,10 +14,10 @@ export const VisualStoriesSection = ({
     <section className="mt-6 border border-neutral-200">
       <div className="flex items-center justify-between border-b border-neutral-200 px-5 py-4 md:px-6">
         <h2 className="text-[12px] font-bold uppercase tracking-[0.14em]">
-          Visual Stories
+          Infographics
         </h2>
         <Link
-          href="/visual-stories"
+          href="/infographics"
           className="text-[10px] font-semibold uppercase tracking-[0.14em] text-pw-secondary"
         >
           View all →
@@ -41,7 +41,7 @@ export const VisualStoriesSection = ({
                   className="object-cover"
                 />
               </Link>
-              <CategoryLabel label="Visual Stories" tag="visual-stories" />
+              <CategoryLabel label="Infographics" tag="visual-stories" />
               <h3 className="mt-1.5 text-[15px] font-bold leading-snug tracking-tight">
                 <Link href={`/post/${post.slug}`}>{post.title}</Link>
               </h3>

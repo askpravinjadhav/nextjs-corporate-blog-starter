@@ -12,6 +12,7 @@ import { RelatedPosts } from "./RelatedPosts";
 import { processTableOfContents, TableOfContents } from "./TOC";
 import { ContentWithCustomComponents } from "@wisp-cms/react-custom-component";
 import { FAQ } from "./WispComponents/FAQ";
+import { OpenSourceAiFundingChart } from "./charts/OpenSourceAiFundingChart";
 import { formatMagazineDate } from "@/lib/date";
 import { stripCmsAttribution, stripLeadingFeaturedImage } from "@/lib/stripCmsAttribution";
 import { CommentSection } from "./CommentSection";
@@ -120,6 +121,7 @@ export const BlogContent = ({
                   content={modifiedHtml}
                   customComponents={{
                     FAQ,
+                    OpenSourceAiFundingChart,
                   }}
                 />
               </div>
