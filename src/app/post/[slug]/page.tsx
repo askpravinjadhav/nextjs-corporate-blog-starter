@@ -99,9 +99,10 @@ export default async function BlogPost(
       "@id": postUrl,
     },
     isPartOf: {
-      "@type": ["CreativeWork", "Product"],
+      "@type": "Blog",
+      "@id": `${config.baseUrl}/#website`,
       name: config.title,
-      productID: config.swgProductId,
+      url: config.baseUrl,
     },
     author: {
       "@type": "Person",
