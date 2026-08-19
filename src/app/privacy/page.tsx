@@ -97,7 +97,9 @@ export default function PrivacyPage() {
         <p>
           Share buttons (for example X, LinkedIn, WhatsApp, or email) send
           you to those services. Their privacy policies apply once you leave
-          Product Wire.
+          Product Wire. Subscribe and Google News prompts use Google Reader
+          Revenue Manager (Subscribe with Google). Google’s privacy policy
+          applies to that flow.
         </p>
       </LegalSection>
 

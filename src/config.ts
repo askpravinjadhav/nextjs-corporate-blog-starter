@@ -56,5 +56,6 @@ export const config = {
     "News without the noise. No ads.",
   linkedinUrl: "https://www.linkedin.com/company/product-wire/",
   googleNewsUrl: `https://news.google.com/search?q=site:${new URL(baseUrl).hostname}&hl=en-IN&gl=IN&ceid=IN:en`,
+  swgProductId: "CAow-MjHDA:openaccess",
   categories,
 };

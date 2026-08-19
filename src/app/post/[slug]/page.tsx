@@ -3,7 +3,6 @@ export const revalidate = 60; // 1 minute'
 import type { Metadata } from "next";
 import { wisp } from "@/lib/wisp";
 import { BlogContent } from "@/components/BlogContent";
-import type { BlogPosting, WithContext } from "schema-dts";
 import { config } from "@/config";
 import { getOgImageUrl } from "@/lib/ogImage";
 import urlJoin from "url-join";
@@ -84,9 +83,9 @@ export default async function BlogPost(
     result.post;
   const postUrl = urlJoin(config.baseUrl, "post", slug);
 
-  const jsonLd: WithContext<BlogPosting> = {
+  const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
+    "@type": "NewsArticle",
     headline: title,
     description: description ?? undefined,
     image: image ? image : undefined,
@@ -94,15 +93,15 @@ export default async function BlogPost(
     dateModified: updatedAt.toString(),
     url: postUrl,
     inLanguage: "en-IN",
+    isAccessibleForFree: true,
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": postUrl,
     },
     isPartOf: {
-      "@type": "Blog",
-      "@id": `${config.baseUrl}/#website`,
+      "@type": ["CreativeWork", "Product"],
       name: config.title,
-      url: config.baseUrl,
+      productID: config.swgProductId,
     },
     author: {
       "@type": "Person",

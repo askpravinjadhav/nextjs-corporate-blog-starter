@@ -52,6 +52,14 @@ export default function AboutPage() {
               Follow
             </h2>
             <div className="mt-3 flex flex-col gap-2">
+              {/* Enable next week:
+              <Link
+                href="/newsletter"
+                className="text-[11px] tracking-wide text-neutral-600 hover:text-black"
+              >
+                Newsletter
+              </Link>
+              */}
               <Link
                 href="/rss"
                 className="text-[11px] tracking-wide text-neutral-600 hover:text-black"

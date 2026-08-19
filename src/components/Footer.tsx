@@ -1,5 +1,7 @@
 import { config } from "@/config";
 import { getCategoryHref } from "@/lib/postCategory";
+// Enable next week:
+// import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { Bookmark, Linkedin, Newspaper, Rss } from "lucide-react";
 import Link from "next/link";
 
@@ -11,6 +13,7 @@ export const Footer = () => {
     <footer className="mt-10 border-t border-neutral-200 bg-white">
       <div className="mx-auto max-w-7xl px-4 py-6">
         <div className="border border-neutral-200">
+          {/* Enable next week: <NewsletterSignup /> */}
           <div className="grid md:grid-cols-3 md:divide-x md:divide-neutral-200">
             <div className="p-5">
               <div className="whitespace-nowrap text-base tracking-tight text-black">
@@ -35,6 +38,11 @@ export const Footer = () => {
                 <Link href="/about" className={linkClass}>
                   About
                 </Link>
+                {/* Enable next week:
+                <Link href="/newsletter" className={linkClass}>
+                  Newsletter
+                </Link>
+                */}
                 {config.categories.map((category) => (
                   <Link
                     key={category.tag}
