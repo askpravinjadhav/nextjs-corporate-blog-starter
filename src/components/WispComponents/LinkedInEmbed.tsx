@@ -1,16 +1,6 @@
 const EMBED_PATH = "/embed/feed/update/";
 const URN_PATTERN = /^urn:li:(ugcPost|share|activity):\d+$/;
 
-export const ARTICLE_LINKEDIN_EMBEDS: Record<
-  string,
-  { src: string; height: number }
-> = {
-  "you-dont-need-erp": {
-    src: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7495971428949995521?collapsed=1",
-    height: 533,
-  },
-};
-
 const parseHeight = (height: string | number | undefined) => {
   const value = typeof height === "number" ? height : Number(height);
   if (!Number.isFinite(value) || value < 200 || value > 2000) {
@@ -84,9 +74,6 @@ export const applyLinkedInEmbeds = (html: string) => {
     .replace(IFRAME_PATTERN, replaceMatch)
     .replace(ESCAPED_IFRAME_BLOCK, (full) => replaceMatch(full));
 };
-
-export const hasLinkedInEmbedComponent = (html: string) =>
-  /data-name=["']LinkedInEmbed["']/i.test(html);
 
 export const LinkedInEmbed = ({
   src,

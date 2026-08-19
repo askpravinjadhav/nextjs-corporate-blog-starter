@@ -12,12 +12,7 @@ import { RelatedPosts } from "./RelatedPosts";
 import { processTableOfContents, TableOfContents } from "./TOC";
 import { ContentWithCustomComponents } from "@wisp-cms/react-custom-component";
 import { FAQ } from "./WispComponents/FAQ";
-import {
-  applyLinkedInEmbeds,
-  ARTICLE_LINKEDIN_EMBEDS,
-  hasLinkedInEmbedComponent,
-  LinkedInEmbed,
-} from "./WispComponents/LinkedInEmbed";
+import { applyLinkedInEmbeds, LinkedInEmbed } from "./WispComponents/LinkedInEmbed";
 import { OpenSourceAiFundingChart } from "./charts/OpenSourceAiFundingChart";
 import { formatMagazineDate } from "@/lib/date";
 import { stripCmsAttribution, stripLeadingFeaturedImage } from "@/lib/stripCmsAttribution";
@@ -130,13 +125,6 @@ export const BlogContent = ({
                     OpenSourceAiFundingChart,
                   }}
                 />
-                {ARTICLE_LINKEDIN_EMBEDS[slug] &&
-                  !hasLinkedInEmbedComponent(modifiedHtml) && (
-                    <LinkedInEmbed
-                      src={ARTICLE_LINKEDIN_EMBEDS[slug].src}
-                      height={ARTICLE_LINKEDIN_EMBEDS[slug].height}
-                    />
-                  )}
               </div>
               <div className="mt-8 border-t border-neutral-200 pt-5">
                 <ArticleActions
