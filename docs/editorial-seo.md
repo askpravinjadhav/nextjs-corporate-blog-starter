@@ -20,6 +20,19 @@ Do this in Wisp before you hit publish. Empty descriptions are the most common r
 
 After publish, wait ~60 seconds (post ISR), then open the live `/post/[slug]` URL and confirm title, description, and image.
 
+## Embed a LinkedIn post
+
+Do not paste a raw `<iframe>` in Wisp (it is often stripped). Insert a custom component in the article body:
+
+```html
+<LinkedInEmbed src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7495971428949995521?collapsed=1" height="533" />
+```
+
+1. On LinkedIn, open the post → **…** → **Embed this post**.
+2. Copy the iframe `src` (`https://www.linkedin.com/embed/feed/update/urn:li:…`).
+3. Paste that URL into `src`. Optional `height` defaults to `533`.
+4. Allowed URNs: `ugcPost`, `share`, `activity` on `www.linkedin.com` only.
+
 ## Google Search Console
 
 1. Property: `https://www.productwire.space`.

@@ -12,6 +12,10 @@ import { RelatedPosts } from "./RelatedPosts";
 import { processTableOfContents, TableOfContents } from "./TOC";
 import { ContentWithCustomComponents } from "@wisp-cms/react-custom-component";
 import { FAQ } from "./WispComponents/FAQ";
+import {
+  applyLinkedInEmbeds,
+  LinkedInEmbed,
+} from "./WispComponents/LinkedInEmbed";
 import { OpenSourceAiFundingChart } from "./charts/OpenSourceAiFundingChart";
 import { formatMagazineDate } from "@/lib/date";
 import { stripCmsAttribution, stripLeadingFeaturedImage } from "@/lib/stripCmsAttribution";
@@ -44,9 +48,9 @@ export const BlogContent = ({
   relatedPosts: GetRelatedPostsResult["posts"];
   latestPosts?: GetPostsResult["posts"];
 }) => {
-  const cleanedContent = stripLeadingFeaturedImage(
-    stripCmsAttribution(content),
-    image
+  const cleanedContent = applyLinkedInEmbeds(
+    stripLeadingFeaturedImage(stripCmsAttribution(content), image),
+    slug
   );
   const { modifiedHtml, tableOfContents } = processTableOfContents(
     cleanedContent,
@@ -121,6 +125,7 @@ export const BlogContent = ({
                   content={modifiedHtml}
                   customComponents={{
                     FAQ,
+                    LinkedInEmbed,
                     OpenSourceAiFundingChart,
                   }}
                 />
