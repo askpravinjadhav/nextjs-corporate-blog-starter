@@ -23,7 +23,7 @@ const categories: Category[] = [
   },
   {
     label: "Conferences",
-    tag: "conferences",
+    tag: "conference",
     description: "News and highlights from tech conferences around the world.",
   },
   {
@@ -49,5 +49,6 @@ export const config = {
   description:
     process.env.NEXT_PUBLIC_BLOG_DESCRIPTION ||
     "Stay informed on the latest in tech, business, and India — covering conferences, tech events, and exhibitions.",
+  linkedinUrl: "https://www.linkedin.com/company/product-wire/",
   categories,
 };

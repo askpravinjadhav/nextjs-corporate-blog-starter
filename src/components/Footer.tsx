@@ -1,6 +1,6 @@
 import { config } from "@/config";
 import { Button } from "./ui/button";
-import { Rss } from "lucide-react";
+import { Linkedin, Rss } from "lucide-react";
 import Link from "next/link";
 
 export const Footer = () => {
@@ -10,11 +10,23 @@ export const Footer = () => {
         <div className="text-sm mt-4">
           © {config.organization} {new Date().getFullYear()}
         </div>
-        <Link href="/rss">
-          <Button variant="ghost">
-            <Rss className="w-4 h-4" />
-          </Button>
-        </Link>
+        <div className="flex items-center gap-1">
+          <Link
+            href={config.linkedinUrl}
+            target="_blank"
+            rel="noopener noreferrer me"
+            aria-label="Product Wire on LinkedIn"
+          >
+            <Button variant="ghost">
+              <Linkedin className="w-4 h-4" />
+            </Button>
+          </Link>
+          <Link href="/rss" aria-label="RSS feed">
+            <Button variant="ghost">
+              <Rss className="w-4 h-4" />
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );

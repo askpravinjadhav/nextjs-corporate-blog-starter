@@ -9,6 +9,7 @@ export const getOrganizationJsonLd = () => ({
     "@type": "ImageObject" as const,
     url: config.logoUrl,
   },
+  sameAs: [config.linkedinUrl],
 });
 
 export const getWebsiteJsonLd = () => ({
