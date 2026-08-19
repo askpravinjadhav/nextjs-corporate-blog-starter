@@ -6,6 +6,7 @@ import { BlogContent } from "@/components/BlogContent";
 import type { BlogPosting, WithContext } from "schema-dts";
 import { config } from "@/config";
 import { getOgImageUrl } from "@/lib/ogImage";
+import urlJoin from "url-join";
 
 interface Params {
   slug: string;
@@ -25,14 +26,36 @@ export async function generateMetadata(
   if (!result.post) {
     return {
       title: "Page not found!",
+      robots: { index: false, follow: false },
     };
   }
+
+  const postUrl = urlJoin(config.baseUrl, "post", slug);
+  const description = result.post.description ?? "";
+
   return {
     title: result.post.title,
-    description: result.post.description,
+    description,
+    authors: result.post.author.name
+      ? [{ name: result.post.author.name }]
+      : undefined,
+    alternates: {
+      canonical: postUrl,
+    },
     openGraph: {
+      type: "article",
       title: result.post.title,
-      description: result.post.description ?? "",
+      description,
+      url: postUrl,
+      images: [result.post.image || getOgImageUrl(result.post.title)],
+      publishedTime: result.post.publishedAt?.toString(),
+      modifiedTime: result.post.updatedAt.toString(),
+      authors: result.post.author.name ? [result.post.author.name] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: result.post.title,
+      description,
       images: [result.post.image || getOgImageUrl(result.post.title)],
     },
   };
@@ -56,15 +79,30 @@ export default async function BlogPost(
 
   if (!result.post) return null;
 
-  const { title, publishedAt, updatedAt, author, image } = result.post;
+  const { title, publishedAt, updatedAt, author, image, description } =
+    result.post;
+  const postUrl = urlJoin(config.baseUrl, "post", slug);
 
   const jsonLd: WithContext<BlogPosting> = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: title,
+    description: description ?? undefined,
     image: image ? image : undefined,
     datePublished: publishedAt ? publishedAt.toString() : undefined,
     dateModified: updatedAt.toString(),
+    url: postUrl,
+    inLanguage: "en-IN",
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": postUrl,
+    },
+    isPartOf: {
+      "@type": "Blog",
+      "@id": `${config.baseUrl}/#website`,
+      name: config.title,
+      url: config.baseUrl,
+    },
     author: {
       "@type": "Person",
       name: author.name ?? undefined,

@@ -21,7 +21,8 @@ export const FullWidthHeader: FunctionComponent<{
   description: string;
   breadcrumb?: BreadcrumbProps[];
   className?: string;
-}> = ({ title, description, breadcrumb, className }) => {
+  serifTitle?: boolean;
+}> = ({ title, description, breadcrumb, className, serifTitle = false }) => {
   return (
     <div
       className={cn(
@@ -61,9 +62,18 @@ export const FullWidthHeader: FunctionComponent<{
             breadcrumb ? "pt-16 lg:pt-18" : "pt-16 lg:pt-28"
           )}
         >
-          <h1 className="text-inherit">{title}</h1>
+          <h1
+            className={cn(
+              "text-inherit",
+              serifTitle && "font-serif font-medium tracking-tight"
+            )}
+          >
+            {title}
+          </h1>
         </div>
-        <div className="my-6 text-lg text-center max-w-2xl mx-auto">{description}</div>
+        <div className="my-6 text-lg text-center max-w-2xl mx-auto text-muted-foreground">
+          {description}
+        </div>
       </div>
     </div>
   );

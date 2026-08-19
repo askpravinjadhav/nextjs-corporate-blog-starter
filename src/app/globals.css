@@ -80,3 +80,7 @@ body {
 .blog-content img {
   @apply w-full;
 }
+
+a[href*="synscribe"] {
+  display: none !important;
+}

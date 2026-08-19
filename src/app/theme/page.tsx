@@ -8,6 +8,10 @@ const description = "Select or generate a gradient theme for your blog";
 export const metadata: Metadata = {
   title,
   description,
+  robots: {
+    index: false,
+    follow: false,
+  },
   openGraph: {
     title,
     description,

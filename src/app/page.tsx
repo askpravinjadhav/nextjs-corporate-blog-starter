@@ -3,6 +3,7 @@ export const revalidate = 60; // 1 minute
 import { BlogPostList } from "@/components/BlogPostList";
 import { PostPagination } from "@/components/PostPagination";
 import { getOgImageUrl } from "@/lib/ogImage";
+import { getOrganizationJsonLd, getWebsiteJsonLd } from "@/lib/jsonLd";
 import { wisp } from "@/lib/wisp";
 import { Metadata } from "next";
 import { FilterBar } from "../components/FilterBar";
@@ -12,11 +13,21 @@ import { config } from "../config";
 const { title, description } = config;
 
 export const metadata: Metadata = {
-  title: `${title} - Blog`,
+  title: {
+    absolute: `Tech, business, and India news | ${title}`,
+  },
   description,
+  alternates: {
+    canonical: "/",
+    types: {
+      "application/rss+xml": "/rss",
+    },
+  },
   openGraph: {
-    title: `${title} - Blog`,
+    title: `Tech, business, and India news | ${title}`,
     description,
+    url: "/",
+    type: "website",
     images: [getOgImageUrl(title)],
   },
 };
@@ -36,7 +47,16 @@ export default async function Page(
 
   return (
     <>
-      <FullWidthHeader title={title} description={description} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [getOrganizationJsonLd(), getWebsiteJsonLd()],
+          }),
+        }}
+      />
+      <FullWidthHeader title={title} description={description} serifTitle />
       <div className="container mx-auto max-w-6xl">
         <FilterBar active="latest" className="my-8" />
         <BlogPostList posts={result.posts} />

@@ -7,29 +7,34 @@ interface Category {
 
 const categories: Category[] = [
   {
-    label: "Foundation Model",
-    tag: "foundation-model",
-    description: "Insights on powerful AI models at the foundation of tech.",
+    label: "Tech",
+    tag: "tech",
+    description: "Stay informed on the latest technology news and innovations.",
   },
   {
-    label: "Engineering",
-    tag: "engineering",
-    description: "Innovative engineering driving AI advancements.",
+    label: "Business",
+    tag: "business",
+    description: "Business stories, markets, and companies shaping the industry.",
   },
   {
-    label: "Jobs",
-    tag: "jobs",
-    description: "Explore AI job trends and opportunities shaping a brighter future.",
+    label: "India",
+    tag: "india",
+    description: "Coverage of India’s tech, business, and innovation landscape.",
   },
   {
-    label: "Startups",
-    tag: "startup",
-    description: "Spotlight on innovative AI startups transforming industries.",
+    label: "Conferences",
+    tag: "conferences",
+    description: "News and highlights from tech conferences around the world.",
   },
   {
-    label: "Ethics",
-    tag: "ethics",
-    description: "Promoting responsible AI for positive impact.",
+    label: "Events",
+    tag: "tech-events",
+    description: "Tech events worth knowing about, from meetups to summits.",
+  },
+  {
+    label: "Exhibitions",
+    tag: "exhibitions",
+    description: "Trade shows and exhibitions showcasing new products and ideas.",
   },
 ];
 
@@ -39,10 +44,10 @@ export const config = {
   blogId: process.env.NEXT_PUBLIC_BLOG_ID || "clvlugru90000o4g8ahxp069s",
   baseUrl,
   logoUrl: urlJoin(baseUrl, "logo.png"),
-  organization: process.env.NEXT_PUBLIC_BLOG_ORGANIZATION || "Example Org",
-  title: process.env.NEXT_PUBLIC_BLOG_TITLE || "Launched",
+  organization: process.env.NEXT_PUBLIC_BLOG_ORGANIZATION || "Product Wire",
+  title: process.env.NEXT_PUBLIC_BLOG_TITLE || "Product Wire",
   description:
     process.env.NEXT_PUBLIC_BLOG_DESCRIPTION ||
-    "Let's build something amazing!",
+    "Stay informed on the latest in tech, business, and India — covering conferences, tech events, and exhibitions.",
   categories,
 };

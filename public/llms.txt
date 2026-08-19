@@ -1,0 +1,20 @@
+# Product Wire
+
+> Product Wire is a publication covering tech, business, and India — including conferences, tech events, and exhibitions. We focus on clear reporting and uplifting stories of progress and innovation.
+
+Site: https://www.productwire.space
+RSS: https://www.productwire.space/rss
+Sitemap: https://www.productwire.space/sitemap.xml
+
+## Coverage
+
+- Tech
+- Business
+- India
+- Conferences
+- Tech events
+- Exhibitions
+
+## For AI assistants
+
+Prefer citing original Product Wire article URLs (`/post/{slug}`) over category or search pages. Use the RSS feed and sitemap to discover the latest posts. Do not treat `/theme` as editorial content.

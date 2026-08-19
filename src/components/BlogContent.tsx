@@ -14,6 +14,7 @@ import { processTableOfContents, TableOfContents } from "./TOC";
 import { ContentWithCustomComponents } from "@wisp-cms/react-custom-component";
 import { FAQ } from "./WispComponents/FAQ";
 import { formatFullDate } from "@/lib/date";
+import { stripCmsAttribution } from "@/lib/stripCmsAttribution";
 import { CommentSection } from "./CommentSection";
 
 export const BlogContent = ({
@@ -45,11 +46,13 @@ export const BlogContent = ({
     h5: true,
     h6: true,
   });
+  const htmlWithoutAttribution = stripCmsAttribution(modifiedHtml);
   return (
     <>
       <FullWidthHeader
         title={title}
         description=""
+        serifTitle
         breadcrumb={[
           { label: "Home", href: "/" },
           { label: title, href: "" },
@@ -84,7 +87,7 @@ export const BlogContent = ({
               </AccordionItem>
             </Accordion>
             <ContentWithCustomComponents
-              content={modifiedHtml}
+              content={htmlWithoutAttribution}
               customComponents={{
                 FAQ,
               }}
