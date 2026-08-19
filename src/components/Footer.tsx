@@ -12,10 +12,10 @@ export const Footer = () => {
         <div className="border border-neutral-200">
           <div className="grid md:grid-cols-3 md:divide-x md:divide-neutral-200">
             <div className="p-5">
-              <div className="text-[10px] font-semibold tracking-[0.22em] text-neutral-500">
-                PRODUCT
+              <div className="whitespace-nowrap text-base tracking-tight text-black">
+                <span className="font-light">PRODUCT</span>{" "}
+                <span className="font-bold">WIRE</span>
               </div>
-              <div className="text-sm font-extrabold tracking-tight">WIRE</div>
               <p className="mt-3 max-w-xs text-[11px] leading-relaxed text-neutral-500">
                 {config.description}
               </p>
