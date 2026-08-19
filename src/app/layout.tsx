@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Toaster } from "@/components/ui/toaster";
 import { config } from "@/config";
+import { Analytics } from "@vercel/analytics/next";
 import { Providers } from "./providers";
 
 const fontSans = IBM_Plex_Sans({
@@ -80,6 +81,7 @@ export default function RootLayout({
           {children}
           <Footer />
           <Toaster />
+          <Analytics />
         </Providers>
       </body>
     </html>
