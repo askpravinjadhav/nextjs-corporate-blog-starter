@@ -57,5 +57,8 @@ export const config = {
   linkedinUrl: "https://www.linkedin.com/company/product-wire/",
   googleNewsUrl: `https://news.google.com/search?q=site:${new URL(baseUrl).hostname}&hl=en-IN&gl=IN&ceid=IN:en`,
   swgProductId: "CAow-MjHDA:openaccess",
+  // Flip to true next week only when the subscribe UI is visible.
+  // Layout (GoogleSwg) and NewsArticle productID both read this flag.
+  swgEnabled: false,
   categories,
 };

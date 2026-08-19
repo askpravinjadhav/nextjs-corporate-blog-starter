@@ -63,10 +63,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     },
     ...postsResult.posts.map((post) => {
+      const lastModified = new Date(post.updatedAt);
+      const publishedAt = new Date(post.publishedAt ?? post.updatedAt);
+      const isFresh = Date.now() - publishedAt.getTime() < 48 * 60 * 60 * 1000;
       return {
         url: urlJoin(config.baseUrl, "post", post.slug),
-        lastModified: new Date(post.updatedAt),
-        priority: 0.8,
+        lastModified,
+        changeFrequency: isFresh ? ("hourly" as const) : ("weekly" as const),
+        priority: isFresh ? 1 : 0.8,
       };
     }),
     ...tagsResult.tags.map((tag) => {

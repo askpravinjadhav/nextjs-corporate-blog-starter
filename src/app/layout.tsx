@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans, Newsreader } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/Footer";
-// Enable Google Subscribe with Google next week:
-// import { GoogleSwg } from "@/components/GoogleSwg";
+import { GoogleSwg } from "@/components/GoogleSwg";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Toaster } from "@/components/ui/toaster";
 import { config } from "@/config";
@@ -84,7 +83,7 @@ export default function RootLayout({
           <Footer />
           <Toaster />
           <Analytics />
-          {/* Enable next week: <GoogleSwg /> */}
+          {config.swgEnabled ? <GoogleSwg /> : null}
         </Providers>
       </body>
     </html>

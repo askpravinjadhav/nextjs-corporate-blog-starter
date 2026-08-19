@@ -118,6 +118,9 @@ export default async function BlogPost(
         url: config.logoUrl,
       },
     },
+    ...(config.swgEnabled
+      ? { productID: config.swgProductId }
+      : {}),
   };
 
   return (

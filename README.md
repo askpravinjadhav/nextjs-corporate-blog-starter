@@ -36,6 +36,7 @@ Wisp is a modern CMS for adding blogs to websites. It features an intuitive, med
 - Automatic table of content generation
 - Automatic sitemap generation
 - Automatic Open Graph image generation
+- Editorial SEO playbook for Wisp, Google Search Console, Google News, and the weekly publishing cadence: [docs/editorial-seo.md](docs/editorial-seo.md)
 - Automatic [Related Posts suggestions](https://www.wisp.blog/blog/suggesting-related-blog-post-with-ai-content-recommendation)
 - Render [Custom React Component](https://www.wisp.blog/docs/advance-concepts/custom-react-component) from CMS
 - RSS Feed
