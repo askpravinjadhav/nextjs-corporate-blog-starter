@@ -4,6 +4,7 @@ import { config } from "@/config";
 import { getCategoryHref } from "@/lib/postCategory";
 import { cn } from "@/lib/utils";
 import { Bookmark, Menu, Search, X } from "lucide-react";
+import { ThemeToggle } from "./ThemeToggle";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { KeyboardEvent, Suspense, useEffect, useRef, useState } from "react";
@@ -84,6 +85,7 @@ const SiteHeaderInner = () => {
         </nav>
 
         <div className="ml-auto flex items-center gap-3">
+          <ThemeToggle />
           <Link href="/saved" aria-label="Saved articles">
             <Bookmark className="h-4 w-4" />
           </Link>

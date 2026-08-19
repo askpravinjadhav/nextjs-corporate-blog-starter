@@ -44,28 +44,28 @@ body {
     --radius: 0.5rem;
   }
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+    --background: 48 31% 5.7%;
+    --foreground: 42 28% 92%;
+    --card: 48 31% 5.7%;
+    --card-foreground: 42 28% 92%;
+    --popover: 48 24% 8%;
+    --popover-foreground: 42 28% 92%;
+    --primary: 42 28% 92%;
+    --primary-foreground: 48 31% 6%;
+    --secondary: 48 18% 12%;
+    --secondary-foreground: 42 28% 92%;
+    --muted: 48 18% 12%;
+    --muted-foreground: 40 12% 62%;
+    --accent: 48 18% 12%;
+    --accent-foreground: 42 28% 92%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --pw-ink: 0 0% 100%;
-    --pw-secondary: 19 100% 58%;
-    --pw-secondary-hover: 19 100% 68%;
+    --border: 42 14% 16%;
+    --input: 42 14% 16%;
+    --ring: 19 100% 48%;
+    --pw-ink: 42 28% 92%;
+    --pw-secondary: 19 100% 48%;
+    --pw-secondary-hover: 19 100% 58%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -81,6 +81,39 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.dark,
+.dark body {
+  background-color: #13120a;
+  color-scheme: dark;
+}
+
+.dark .bg-white,
+.dark .bg-neutral-50 {
+  background-color: #13120a;
+}
+
+.dark .text-black,
+.dark .hover\:text-black:hover,
+.dark .text-neutral-800,
+.dark .text-neutral-700 {
+  color: #efe8d6;
+}
+
+.dark .text-neutral-600,
+.dark .text-neutral-500 {
+  color: #b5ae9a;
+}
+
+.dark .text-neutral-400,
+.dark .text-muted-foreground {
+  color: #8c8676;
+}
+
+.dark [class*="border-neutral-200"],
+.dark [class*="divide-neutral-200"] > :not([hidden]) ~ :not([hidden]) {
+  border-color: #2a271c;
 }
 
 .blog-content img {
@@ -104,6 +137,49 @@ body {
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   font-weight: 700;
   letter-spacing: -0.02em;
+}
+
+.dark .prose {
+  --tw-prose-body: #cfc6b0;
+  --tw-prose-headings: #efe8d6;
+  --tw-prose-lead: #cfc6b0;
+  --tw-prose-links: #f54e00;
+  --tw-prose-bold: #efe8d6;
+  --tw-prose-counters: #b5ae9a;
+  --tw-prose-bullets: #8c8676;
+  --tw-prose-hr: #2a271c;
+  --tw-prose-quotes: #efe8d6;
+  --tw-prose-quote-borders: #f54e00;
+  --tw-prose-captions: #8c8676;
+  --tw-prose-code: #efe8d6;
+  --tw-prose-pre-code: #cfc6b0;
+  --tw-prose-pre-bg: #1c1a12;
+  --tw-prose-th-borders: #2a271c;
+  --tw-prose-td-borders: #2a271c;
+}
+
+.dark .prose.blog-content p,
+.dark .prose.blog-content li {
+  color: #cfc6b0;
+}
+
+.dark .prose.blog-content h1,
+.dark .prose.blog-content h2,
+.dark .prose.blog-content h3,
+.dark .prose.blog-content h4,
+.dark .prose.blog-content strong,
+.dark .prose.blog-content b {
+  color: #efe8d6;
+}
+
+.dark .prose.blog-content a {
+  color: #f54e00;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.dark .prose.blog-content a:hover {
+  color: #ff6a26;
 }
 
 a[href*="synscribe"] {
