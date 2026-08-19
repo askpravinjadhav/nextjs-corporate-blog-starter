@@ -22,15 +22,22 @@ After publish, wait ~60 seconds (post ISR), then open the live `/post/[slug]` UR
 
 ## Embed a LinkedIn post
 
-Do not paste a raw `<iframe>` in Wisp (it is often stripped). Insert a custom component in the article body:
+Wisp does not keep a raw `<iframe>`. Use a **Custom React Component** block (`/` → React) named `LinkedInEmbed` with JSON props:
 
-```html
-<LinkedInEmbed src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7495971428949995521?collapsed=1" height="533" />
+```json
+{
+  "src": "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7495971428949995521?collapsed=1",
+  "height": 533
+}
 ```
 
+**You dont need ERP?** already shows this LinkedIn post at the end of the article in the site code.
+
+For other posts:
+
 1. On LinkedIn, open the post → **…** → **Embed this post**.
-2. Copy the iframe `src` (`https://www.linkedin.com/embed/feed/update/urn:li:…`).
-3. Paste that URL into `src`. Optional `height` defaults to `533`.
+2. Copy the iframe `src`.
+3. In Wisp, insert Custom React Component `LinkedInEmbed` with that `src`.
 4. Allowed URNs: `ugcPost`, `share`, `activity` on `www.linkedin.com` only.
 
 ## Google Search Console

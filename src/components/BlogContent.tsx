@@ -14,6 +14,8 @@ import { ContentWithCustomComponents } from "@wisp-cms/react-custom-component";
 import { FAQ } from "./WispComponents/FAQ";
 import {
   applyLinkedInEmbeds,
+  ARTICLE_LINKEDIN_EMBEDS,
+  hasLinkedInEmbedComponent,
   LinkedInEmbed,
 } from "./WispComponents/LinkedInEmbed";
 import { OpenSourceAiFundingChart } from "./charts/OpenSourceAiFundingChart";
@@ -49,8 +51,7 @@ export const BlogContent = ({
   latestPosts?: GetPostsResult["posts"];
 }) => {
   const cleanedContent = applyLinkedInEmbeds(
-    stripLeadingFeaturedImage(stripCmsAttribution(content), image),
-    slug
+    stripLeadingFeaturedImage(stripCmsAttribution(content), image)
   );
   const { modifiedHtml, tableOfContents } = processTableOfContents(
     cleanedContent,
@@ -129,6 +130,13 @@ export const BlogContent = ({
                     OpenSourceAiFundingChart,
                   }}
                 />
+                {ARTICLE_LINKEDIN_EMBEDS[slug] &&
+                  !hasLinkedInEmbedComponent(modifiedHtml) && (
+                    <LinkedInEmbed
+                      src={ARTICLE_LINKEDIN_EMBEDS[slug].src}
+                      height={ARTICLE_LINKEDIN_EMBEDS[slug].height}
+                    />
+                  )}
               </div>
               <div className="mt-8 border-t border-neutral-200 pt-5">
                 <ArticleActions

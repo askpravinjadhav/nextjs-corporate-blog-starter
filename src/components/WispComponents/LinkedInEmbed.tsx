@@ -1,16 +1,14 @@
 const EMBED_PATH = "/embed/feed/update/";
 const URN_PATTERN = /^urn:li:(ugcPost|share|activity):\d+$/;
 
-const ARTICLE_EMBEDS: Record<string, { src: string; height: number }> = {
+export const ARTICLE_LINKEDIN_EMBEDS: Record<
+  string,
+  { src: string; height: number }
+> = {
   "you-dont-need-erp": {
     src: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7495971428949995521?collapsed=1",
     height: 533,
   },
-};
-
-const linkedInEmbedTag = (src: string, height?: string | number) => {
-  const heightAttr = height == null || height === "" ? "" : ` height="${height}"`;
-  return `<LinkedInEmbed src="${src}"${heightAttr} />`;
 };
 
 const parseHeight = (height: string | number | undefined) => {
@@ -54,30 +52,41 @@ export const getLinkedInEmbedSrc = (raw: string | undefined) => {
   }
 };
 
+const wispLinkedInEmbedHtml = (src: string, height?: string | number) => {
+  const props = { src, height: parseHeight(height) };
+  return `<div data-wisp-react-component="true" data-name="LinkedInEmbed" data-props="${encodeURIComponent(JSON.stringify(props))}"></div>`;
+};
+
+const extractEmbedUrl = (value: string) => {
+  const match = value.match(
+    /https:\/\/www\.linkedin\.com\/embed\/feed\/update\/urn:li:(?:ugcPost|share|activity):\d+(?:\?[^"'<\s]*)?/i
+  );
+  return getLinkedInEmbedSrc(match?.[0]);
+};
+
 const IFRAME_PATTERN =
   /<iframe\b[^>]*?\bsrc=["']([^"']+)["'][^>]*>(?:\s*<\/iframe>)?|<iframe\b[^>]*?\bsrc=["']([^"']+)["'][^>]*\/>/gi;
 
-export const applyLinkedInEmbeds = (html: string, slug: string) => {
-  let next = html.replace(IFRAME_PATTERN, (full, srcA?: string, srcB?: string) => {
-    const safe = getLinkedInEmbedSrc(srcA || srcB);
+const ESCAPED_IFRAME_BLOCK =
+  /<p\b[^>]*>\s*(?:&lt;iframe|<iframe)\b[\s\S]*?<\/p>/gi;
+
+export const applyLinkedInEmbeds = (html: string) => {
+  const replaceMatch = (full: string, srcA?: string, srcB?: string) => {
+    const safe = getLinkedInEmbedSrc(srcA || srcB) || extractEmbedUrl(full);
     if (!safe) {
       return full;
     }
-    const heightMatch = full.match(/\bheight=["']?(\d+)/i);
-    return linkedInEmbedTag(safe, heightMatch?.[1]);
-  });
+    const heightMatch = full.match(/height(?:\s*=\s*|&quot;|=&quot;)["']?(\d+)/i);
+    return wispLinkedInEmbedHtml(safe, heightMatch?.[1]);
+  };
 
-  const articleEmbed = ARTICLE_EMBEDS[slug];
-  if (
-    articleEmbed &&
-    !next.includes(articleEmbed.src) &&
-    !next.includes("<LinkedInEmbed")
-  ) {
-    next = `${next}${linkedInEmbedTag(articleEmbed.src, articleEmbed.height)}`;
-  }
-
-  return next;
+  return html
+    .replace(IFRAME_PATTERN, replaceMatch)
+    .replace(ESCAPED_IFRAME_BLOCK, (full) => replaceMatch(full));
 };
+
+export const hasLinkedInEmbedComponent = (html: string) =>
+  /data-name=["']LinkedInEmbed["']/i.test(html);
 
 export const LinkedInEmbed = ({
   src,
@@ -109,16 +118,16 @@ export const LinkedInEmbed = ({
   }
 
   return (
-    <figure className="not-prose my-6 mx-auto w-full max-w-full overflow-hidden border border-neutral-200 bg-white">
+    <figure className="not-prose my-6 mx-auto w-full max-w-[504px] overflow-hidden border border-neutral-200 bg-white">
       <iframe
         src={embedSrc}
         height={iframeHeight}
-        width="100%"
-        title="Embedded LinkedIn post"
+        width={504}
+        title="Embedded post"
         loading="lazy"
         allowFullScreen
         referrerPolicy="strict-origin-when-cross-origin"
-        className="block w-full max-w-full"
+        className="block w-full max-w-full border-0"
       />
     </figure>
   );
