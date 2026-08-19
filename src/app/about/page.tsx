@@ -74,6 +74,24 @@ export default function AboutPage() {
               >
                 LinkedIn
               </Link>
+              <Link
+                href="/publication-policies"
+                className="text-[11px] tracking-wide text-neutral-600 hover:text-black"
+              >
+                Publication policies
+              </Link>
+              <Link
+                href="/terms"
+                className="text-[11px] tracking-wide text-neutral-600 hover:text-black"
+              >
+                Terms of Service
+              </Link>
+              <Link
+                href="/privacy"
+                className="text-[11px] tracking-wide text-neutral-600 hover:text-black"
+              >
+                Privacy policy
+              </Link>
             </div>
           </div>
         </div>

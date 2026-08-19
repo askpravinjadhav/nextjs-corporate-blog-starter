@@ -86,10 +86,21 @@ export const Footer = () => {
               </div>
             </div>
           </div>
-          <div className="border-t border-neutral-200 px-5 py-3">
+          <div className="flex flex-col gap-3 border-t border-neutral-200 px-5 py-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-[10px] uppercase tracking-[0.14em] text-neutral-400">
               © {config.organization} {new Date().getFullYear()} · No ads
             </p>
+            <div className="flex flex-wrap gap-x-4 gap-y-1">
+              <Link href="/publication-policies" className={linkClass}>
+                Publication policies
+              </Link>
+              <Link href="/terms" className={linkClass}>
+                Terms of Service
+              </Link>
+              <Link href="/privacy" className={linkClass}>
+                Privacy policy
+              </Link>
+            </div>
           </div>
         </div>
       </div>
