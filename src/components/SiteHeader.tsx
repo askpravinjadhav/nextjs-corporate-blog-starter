@@ -2,7 +2,7 @@
 
 import { config } from "@/config";
 import { cn } from "@/lib/utils";
-import { Menu, Search, X } from "lucide-react";
+import { Bookmark, Menu, Search, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { KeyboardEvent, Suspense, useEffect, useRef, useState } from "react";
@@ -56,13 +56,9 @@ const SiteHeaderInner = () => {
           {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
 
-        <Link href="/" className="shrink-0 leading-none">
-          <span className="block text-[10px] font-semibold tracking-[0.22em] text-neutral-500">
-            PRODUCT
-          </span>
-          <span className="block text-base font-extrabold tracking-tight text-black">
-            WIRE
-          </span>
+        <Link href="/" className="shrink-0 whitespace-nowrap text-base leading-none tracking-tight text-black">
+          <span className="font-light">PRODUCT</span>{" "}
+          <span className="font-bold">WIRE</span>
         </Link>
 
         <nav className="hidden flex-1 items-center justify-center gap-5 lg:flex">
@@ -86,7 +82,10 @@ const SiteHeaderInner = () => {
           })}
         </nav>
 
-        <div className="ml-auto flex items-center">
+        <div className="ml-auto flex items-center gap-3">
+          <Link href="/saved" aria-label="Saved articles">
+            <Bookmark className="h-4 w-4" />
+          </Link>
           {searchOpen ? (
             <div className="flex items-center border border-neutral-200 px-2">
               <input

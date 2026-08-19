@@ -17,12 +17,12 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/theme"],
+        disallow: ["/theme", "/saved"],
       },
       ...aiCrawlers.map((userAgent) => ({
         userAgent,
         allow: "/",
-        disallow: ["/theme"],
+        disallow: ["/theme", "/saved"],
       })),
     ],
     sitemap: `${config.baseUrl}/sitemap.xml`,

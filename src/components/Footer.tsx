@@ -1,5 +1,5 @@
 import { config } from "@/config";
-import { Linkedin, Rss } from "lucide-react";
+import { Bookmark, Linkedin, Newspaper, Rss } from "lucide-react";
 import Link from "next/link";
 
 const linkClass =
@@ -54,11 +54,27 @@ export const Footer = () => {
                   <Linkedin className="h-4 w-4" />
                 </Link>
                 <Link
+                  href={config.googleNewsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Follow Product Wire on Google News"
+                  className="text-neutral-700 hover:text-black"
+                >
+                  <Newspaper className="h-4 w-4" />
+                </Link>
+                <Link
                   href="/rss"
                   aria-label="RSS feed"
                   className="text-neutral-700 hover:text-black"
                 >
                   <Rss className="h-4 w-4" />
+                </Link>
+                <Link
+                  href="/saved"
+                  aria-label="Saved articles"
+                  className="text-neutral-700 hover:text-black"
+                >
+                  <Bookmark className="h-4 w-4" />
                 </Link>
               </div>
             </div>

@@ -50,5 +50,6 @@ export const config = {
     process.env.NEXT_PUBLIC_BLOG_DESCRIPTION ||
     "Stay informed on the latest in tech, business, and India — covering conferences, tech events, and exhibitions.",
   linkedinUrl: "https://www.linkedin.com/company/product-wire/",
+  googleNewsUrl: `https://news.google.com/search?q=site:${new URL(baseUrl).hostname}&hl=en-IN&gl=IN&ceid=IN:en`,
   categories,
 };

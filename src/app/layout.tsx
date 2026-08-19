@@ -3,6 +3,7 @@ import { IBM_Plex_Sans, Newsreader } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/Footer";
 import { SiteHeader } from "@/components/SiteHeader";
+import { Toaster } from "@/components/ui/toaster";
 import { config } from "@/config";
 import { Providers } from "./providers";
 
@@ -78,6 +79,7 @@ export default function RootLayout({
           <SiteHeader />
           {children}
           <Footer />
+          <Toaster />
         </Providers>
       </body>
     </html>

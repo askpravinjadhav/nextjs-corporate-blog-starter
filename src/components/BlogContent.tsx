@@ -15,12 +15,13 @@ import { FAQ } from "./WispComponents/FAQ";
 import { formatMagazineDate } from "@/lib/date";
 import { stripCmsAttribution, stripLeadingFeaturedImage } from "@/lib/stripCmsAttribution";
 import { CommentSection } from "./CommentSection";
+import { ArticleActions } from "./ArticleActions";
 import { CategoryLabel } from "./CategoryLabel";
 import { LatestNewsSidebar } from "./LatestNewsSidebar";
 import { getPostCategory } from "@/lib/postCategory";
 
 export const BlogContent = ({
-  post: { title, content, author, publishedAt, tags, slug, image },
+  post: { title, content, author, publishedAt, tags, slug, image, description },
   relatedPosts,
   latestPosts = [],
 }: {
@@ -83,6 +84,14 @@ export const BlogContent = ({
                 {author.name} ·{" "}
                 {publishedAt ? formatMagazineDate(publishedAt) : "N/A"}
               </p>
+              <div className="mt-4">
+                <ArticleActions
+                  slug={slug}
+                  title={title}
+                  description={description}
+                  image={image}
+                />
+              </div>
               {image && (
                 <div className="relative mt-5 aspect-[16/8]">
                   <Image src={image} alt={title} fill className="object-cover" />
@@ -112,6 +121,14 @@ export const BlogContent = ({
                   customComponents={{
                     FAQ,
                   }}
+                />
+              </div>
+              <div className="mt-8 border-t border-neutral-200 pt-5">
+                <ArticleActions
+                  slug={slug}
+                  title={title}
+                  description={description}
+                  image={image}
                 />
               </div>
               {tags.length > 0 && (
